@@ -2,7 +2,7 @@
 name: story-implement
 description: >-
   Implement a ready US-* story with token-min pack, allowlist-only edits,
-  secure and lean codegen. Refuse without story id.
+  secure and lean codegen across api + web + mobile unless channels say otherwise.
 ---
 
 # story-implement
@@ -12,20 +12,22 @@ description: >-
 - User provides `US-*` id
 - Story `status` is `ready` or `in_progress`
 - Not `needs_human` / `blocked` / `cancelled`
+- Read `DOCS_ROOT/delivery/STORY-CONTRACT.md` for Civil ERP (full slice DoD)
 
 ## Steps
 
-1. Run `$AGENTIC_SDLC/scripts/pack-story-context.sh <US-id>` (or installed copy). Abort if pack fails.
+1. Run packer for `<US-id>`. Abort if pack fails.
 2. Set story `status: in_progress`.
-3. Read **only** pack contents + allowlisted paths as needed (outline → slice → edit).
-4. **Secure:** no secrets; validate inputs; authz/tenant scope on mutating APIs; parameterized queries.
-5. **Lean:** prefer edits over new layers; no dead code, stubs, or speculative abstractions; diff maps to AC.
-6. Stay inside `repos[].allow`.
-7. Write `.agentic/runs/<id>-implement.json` run log (schema in harness).
-8. Hand off to `story-test`.
+3. Default **channels** = `api`, `web`, `mobile` unless story overrides.
+4. Implement in order: **API → Web → Mobile** within `repos[].allow`.
+5. Web: FEAT-UI tokens/primitives only. Mobile: `theme/tokens.ts` only.
+6. **Secure:** no secrets; validate inputs; authz/tenant scope; parameterized queries.
+7. **Lean:** prefer edits; no dead code; diff maps to AC.
+8. Write `.agentic/runs/<id>-implement.json`.
+9. Hand off to `story-test` (all channel tests in frontmatter).
 
 ## Refuse
 
-- No story id / vibe feature requests
-- Paths outside allow
-- Over budget without story amend
+- No story id / vibe features
+- Skipping web or mobile on a full-slice story without `channels` exception
+- Paths outside allow / over budget

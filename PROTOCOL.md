@@ -7,9 +7,10 @@ Reusable, product-agnostic contract for story-driven agent development.
 1. **Story-only coding** — no implementation without `US-*` or `BUG-*` in `ready` / `in_progress`.
 2. **Token-min** — run context packer before implement/fix/test/review/cleanup; stay under story budgets.
 3. **Secure + lean** — no secrets, least privilege, authz; minimal diffs; no junk.
-4. **Cleanup before done** — `story-cleanup` required; only that story’s diff footprint.
-5. **Markdown = source of truth** — boards (GitHub Projects / Jira) are mirrors.
-6. **Humans merge** — especially `security: elevated`; no auto-merge.
+4. **Full-slice stories** — unless `channels` is narrowed: **API + Web UI + Mobile UI + tests + security/vuln review**.
+5. **Cleanup before done** — `story-cleanup` required; only that story’s diff footprint.
+6. **Markdown = source of truth** — boards (GitHub Projects / Jira) are mirrors.
+7. **Humans merge** — especially `security: elevated`; no auto-merge.
 
 ## Layout
 
@@ -30,7 +31,7 @@ Set `DOCS_ROOT` in each code repo `AGENTS.md` (e.g. `../civil-erp-docs`).
 ## Skill loop
 
 ```
-story-author → story-ready → story-implement → story-test → story-review → story-cleanup → done
+story-author → story-ready → story-implement (api→web→mobile) → story-test → story-review (security+vuln) → story-cleanup → done
 ```
 
 Bugs: `BUG-*` → story-ready → story-fix → test → review → cleanup → done.

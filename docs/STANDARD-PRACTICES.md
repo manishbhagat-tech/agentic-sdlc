@@ -7,6 +7,8 @@ Baseline engineering practices this kit expects products to follow.
 | Practice | Kit support |
 |----------|-------------|
 | Story-only changes | skills + rules + hooks |
+| **Full slice (api+web+mobile)** | story contract / `channels` |
+| Tests + security + vuln gate | story-test + story-review |
 | Branch per story | `feat/US-*`, `fix/BUG-*` |
 | One story per PR | PROTOCOL + CI cite gate |
 | AC + DoD on every story | templates + `story-ready` |

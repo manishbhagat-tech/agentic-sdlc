@@ -5,6 +5,7 @@ title: Short title
 status: draft
 revision: 1
 security: standard
+channels: [api, web, mobile]
 blocked_by: []
 supersedes: null
 superseded_by: null
@@ -17,10 +18,17 @@ must_read: []
 repos:
   - path: your-api
     allow: []
-    outline_only: []
+  - path: your-web
+    allow: []
+  - path: your-mobile
+    allow: []
 tests:
   - repo: your-api
-    cmd: echo "define tests"
+    cmd: echo "api tests"
+  - repo: your-web
+    cmd: echo "web build/test"
+  - repo: your-mobile
+    cmd: echo "mobile test"
 feedback: []
 ---
 
@@ -32,17 +40,22 @@ As a …, I want …, so that ….
 
 ## Acceptance criteria
 
-1. Given … when … then …
-2. …
+1. Given … when … then … (API)
+2. … (Web UI)
+3. … (Mobile UI)
+4. …
 
 ## Definition of done
 
-- [ ] AC met
-- [ ] Tests green
-- [ ] `story-review` passed (security + lean)
-- [ ] `story-cleanup` run
+- [ ] API done
+- [ ] Web UI done (design tokens only)
+- [ ] Mobile UI done (theme tokens only)
+- [ ] Tests green (`tests[]`)
+- [ ] Security checklist passed
+- [ ] Vulnerability check noted
+- [ ] `story-review` + `story-cleanup`
 - [ ] PR cites this id
 
 ## Notes
 
-(minimal)
+Full-slice contract: see product `delivery/STORY-CONTRACT.md` when applicable.
