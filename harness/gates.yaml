@@ -1,0 +1,21 @@
+gates:
+  - id: story_ready
+    description: Valid frontmatter; status ready or in_progress
+  - id: pack_budget
+    description: pack_tokens_est <= budget.max_context_tokens
+  - id: path_scope
+    description: Edits only under repos[].allow
+  - id: read_caps
+    description: Respect max_files_read / max_file_lines
+  - id: shell_deny
+    description: Deny force-push, hard reset, destructive rm
+  - id: tests
+    description: Story tests exit 0
+  - id: security_review
+    description: Security checklist; elevated needs human
+  - id: lean_cleanup
+    description: story-cleanup run logged before done
+  - id: pr_cite
+    description: PR/commit cites US-* or BUG-*
+  - id: run_log
+    description: .agentic/runs/*.json present

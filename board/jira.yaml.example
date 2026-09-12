@@ -1,0 +1,28 @@
+# Board adapter config — Jira (enable when migrating)
+
+provider: jira
+enabled: false
+
+base_url: https://YOUR_ORG.atlassian.net
+project_key: CERP
+
+# Custom field id for StoryId (US-*/BUG-*), create in Jira first
+story_id_field: customfield_XXXXX
+
+status_map:
+  draft: To Do
+  ready: Ready
+  in_progress: In Progress
+  in_review: In Review
+  needs_human: Blocked
+  blocked: Blocked
+  done: Done
+  cancelled: Cancelled
+  superseded: Cancelled
+
+sync:
+  status_from_board: false
+  push_on_ready: true
+
+# Same markdown schema as GitHub — no story rewrite on migration.
+# Preserve external_id (Jira issue key) on each story file.

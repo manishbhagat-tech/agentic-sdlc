@@ -1,0 +1,15 @@
+---
+description: Story-only development — no vibe coding
+alwaysApply: true
+---
+
+# Story-only guardrail
+
+- Do not implement application features without a `US-*` or `BUG-*` id whose story file is `ready` or `in_progress`.
+- Before implement/fix/test/review/cleanup, run `scripts/agentic/pack-story-context.sh <id>` and stay within the pack + `allow` paths.
+- Prefer outline → targeted read → patch.
+- Secure + lean: no secrets, authz on mutations, minimal diffs, no junk.
+- Run `story-cleanup` before marking done.
+- Never force-push, hard-reset, or delete secrets.
+- Branch naming: `feat/US-…` or `fix/BUG-…`.
+- PR must cite the story/bug id.

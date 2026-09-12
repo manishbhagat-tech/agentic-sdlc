@@ -1,0 +1,37 @@
+# Board adapter config — GitHub Projects (v1)
+
+# Fill in after creating a GitHub Project. Markdown remains source of truth.
+
+provider: github_projects
+enabled: false
+
+# Repository that owns issues (org/name)
+repo: YOUR_ORG/civil-erp-docs
+
+# Project number (from Projects URL)
+project_number: 1
+
+# Map markdown status → Project Status option names
+status_map:
+  draft: Backlog
+  ready: Ready
+  in_progress: In Progress
+  in_review: In Review
+  needs_human: Needs Human
+  blocked: Blocked
+  done: Done
+  cancelled: Cancelled
+  superseded: Cancelled
+
+# Pull board status into markdown when true
+sync:
+  status_from_board: false
+  push_on_ready: true
+
+# Title format for issues
+title_template: "{id}: {title}"
+
+# Labels
+security_elevated_label: "security:elevated"
+bug_label: bug
+story_label: story

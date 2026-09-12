@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["story_id", "skill", "outcome"],
+  "properties": {
+    "story_id": { "type": "string" },
+    "revision": { "type": ["string", "number"] },
+    "skill": {
+      "type": "string",
+      "enum": ["story-implement", "story-fix", "story-test", "story-review", "story-cleanup", "story-ready", "story-author"]
+    },
+    "pack_tokens_est": { "type": "integer" },
+    "files_read": { "type": "integer" },
+    "files_edited": { "type": "integer" },
+    "paths_outside_allow": { "type": "integer" },
+    "security": { "type": "string" },
+    "cleanup_ran": { "type": "boolean" },
+    "tests_passed": { "type": "boolean" },
+    "outcome": { "type": "string", "enum": ["pass", "fail", "abort"] }
+  }
+}
