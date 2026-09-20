@@ -2,7 +2,8 @@
 name: git-ops
 description: >-
   Allowlist-only git via scripts/git-safe.sh. Composes addy/git-workflow filtered
-  by deny list. No force-push to shared defaults, no destructive history rewrite.
+  by deny list. No force-push to shared defaults. One working branch per effort;
+  at most one commit per story layer (docs/api/web/mobile) — squash fix trails.
 ---
 
 # git-ops
@@ -36,6 +37,17 @@ Denied (also enforced by hooks): force push to main/master, `reset --hard`, `cle
 ```
 HANDOFF: git-ops → human-merge|done | outcome=<pass|fail> | branch=<name> | notes=…
 ```
+
+## Commit hygiene
+
+- **No branch sprawl.** Related work continues on the existing PR branch with sequential commits (Jarvis/Manish standing rule). Do not open a new branch per tweak.
+- **One commit per story layer.** For a given `US-*` / `BUG-*`, prefer at most:
+  - `docs(…)` — story/feature markdown + run artifacts needed for gates
+  - `feat(…)` / `fix(…)` **api** — all API changes for that story
+  - `feat(…)` / `fix(…)` **web** — all web changes for that story
+  - `feat(…)` / `fix(…)` **mobile** — all mobile changes for that story
+- Fold review nits, token fixes, and cleanup into the matching layer commit before handoff (soft-reset + recommit, or amend while unpublished). Avoid long `fix(US-…)` trails.
+- Squash on a **feature** PR branch with `--force-with-lease` only when Manish/Jarvis ask (or for this hygiene). **Never** force-push shared defaults (`main`/`master`).
 
 ## Refuse
 
