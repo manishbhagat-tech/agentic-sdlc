@@ -39,7 +39,20 @@ Deny (even if upstream suggests them):
 - Deleting the repo, rewriting `main`/`master` history, or auto-prod deploy
 - Committing `.env`, credentials, or private keys
 
-Prefer story branches (`feat/US-*`, `fix/BUG-*`), one story per PR, PR cites the id. Humans merge elevated / production.
+Prefer story branches (`feat/US-*`, `fix/BUG-*`), **one working branch per related effort** (no branch sprawl — stack sequential commits on the existing PR branch), one story per PR when practical, PR cites the id. Humans merge elevated / production.
+
+### Commit hygiene (no long trails)
+
+For a single story/task, keep **at most one commit per layer** — fold fix/nit/rework into that layer before handoff:
+
+| Layer | Example message |
+|-------|-----------------|
+| docs | `docs(US-…): …` (story SoT / must_read / kanban) |
+| api | `feat(US-…): API …` |
+| web | `feat(US-…): web …` |
+| mobile | `feat(US-…): mobile …` |
+
+Do **not** leave trails of `fix(US-…)` commits for the same story layer. Squash on the feature branch with `--force-with-lease` only when Manish/Jarvis ask (or standing squash hygiene); **never** force-push `main`/`master`.
 
 ## Token-min
 
