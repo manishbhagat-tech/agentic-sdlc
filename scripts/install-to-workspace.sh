@@ -126,7 +126,7 @@ AGENTIC_SDLC: ../../agentic-sdlc
 ## Rules
 
 - Implement only from ready \`US-*\` / \`BUG-*\` stories with \`skills:[]\`.
-- Design via feature-prd → hld → lld → ui → feature-stories.
+- Design via feature-research? → feature-prd → hld → lld → ui → feature-stories.
 - Run \`scripts/agentic/pack-story-context.sh <id>\` before implement/fix/review/cleanup.
 - Git via \`scripts/agentic/git-safe.sh\`. Branch: \`feat/US-…\` or \`fix/BUG-…\`.
 - Secure + lean; story-security + cleanup before done.

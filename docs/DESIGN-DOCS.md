@@ -5,13 +5,14 @@ Feature design lives under product `DOCS_ROOT`, not in code repos.
 ## Order
 
 ```
-feature-prd → feature-hld → feature-lld → feature-ui (if web/mobile) → feature-stories
+feature-research? → feature-prd → feature-hld → feature-lld → feature-ui (if web/mobile) → feature-stories
 ```
 
 ## Artifacts
 
 | Doc | Template | Owner role |
 |-----|----------|------------|
+| Research pack | cited md at `out_path` | researcher |
 | PRD | `templates/feature/PRD.md` | product |
 | HLD | `templates/feature/HLD.md` | architect |
 | LLD | `templates/feature/LLD.md` | architect |

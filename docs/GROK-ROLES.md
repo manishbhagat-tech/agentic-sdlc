@@ -32,7 +32,7 @@ Personas are **who**; `skills/addy/*` are **how**. Both go through wrappers.
 
 | Goal | Roles in order |
 |------|----------------|
-| New feature | product → architect → designer → product (stories) → developer → qa → security → designer (ui-review) → devops/review → developer (cleanup) → git |
+| New feature | researcher → product → architect → designer → product (stories) → developer → qa → security → designer (ui-review) → devops/review → developer (cleanup) → git |
 | Bug | product (BUG) → developer (fix) → qa → security → … |
 | Ship / image / K8s staging | devops (`skills/devops`) after review; prod = human |
 

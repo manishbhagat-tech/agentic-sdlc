@@ -15,6 +15,8 @@ VENDORS=(
   "vercel|vendor/vercel-agent-skills/skills|1"
   "next|vendor/nextjs-skills/skills|1"
   "ui-skills|vendor/ui-skills|0"
+  "ecc|vendor/ecc-market-research|0"
+  "pm|vendor/pm-competitor-analysis|0"
 )
 
 echo "== thin wrapper coverage (skills) =="

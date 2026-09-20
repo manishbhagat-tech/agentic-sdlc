@@ -1,0 +1,11 @@
+{
+  "repo": "affaan-m/ECC",
+  "url": "https://github.com/affaan-m/everything-claude-code",
+  "source_path": ".cursor/skills/market-research/SKILL.md",
+  "commit_sha": "2b6e839771e53096d8451a213d40dc64ec8acac0",
+  "tag": null,
+  "date": "2026-09-20T19:37:57Z",
+  "license": "MIT",
+  "reviewed_by": "agentic-sdlc",
+  "notes": "Scoped pin of ECC market-research only (repo renamed affaan-m/ECC; also published at .agents/skills/market-research). Host .agents/*.yaml not vendored. MIT (Copyright 2026 Affaan Mustafa). Enter via skills/ecc/market-research. Re-review on SHA bump."
+}
