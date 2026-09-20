@@ -8,6 +8,7 @@
     "skill": {
       "type": "string",
       "enum": [
+        "feature-research",
         "feature-prd",
         "feature-hld",
         "feature-lld",

@@ -7,7 +7,7 @@ Baseline engineering practices this kit expects products to follow.
 | Practice | Kit support |
 |----------|-------------|
 | Story-only changes | skills + rules + hooks |
-| Design docs before code | feature-prd/hld/lld/ui + DESIGN-DOCS |
+| Design docs before code | feature-research? → feature-prd/hld/lld/ui + DESIGN-DOCS |
 | **Full slice (api+web+mobile)** | story contract / `channels` |
 | Explicit skill loadout | story `skills:[]` ∩ WRAPPER-MAP |
 | Tests + security + UI gate | story-test → story-security → ui-review → story-review |

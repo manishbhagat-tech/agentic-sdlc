@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.3 — 2026-09-20
+
+- Researcher role (`roles/researcher`) + orchestrator `skills/feature-research`: topic → cited pack → HANDOFF product
+- Product prefers researcher packs; gap-check Implemented/Partial/Not-started vs frozen requirements (Core Must first)
+- WRAPPER-MAP + run-log schema include `feature-research`
+
 ## 0.3.2 — 2026-09-20
 
 - Deploy automation applied to product repos: real Dockerfiles, staging auto-deploy, prod `workflow_dispatch` + Environment approval

@@ -4,6 +4,7 @@ Product-agnostic role pack for agentic-sdlc. Each role points only at **orchestr
 
 | Role | Owns | Primary orchestrators |
 |------|------|------------------------|
+| researcher | cited topic pack → product | `feature-research` |
 | product | PRD, stories, DoR | `feature-prd`, `feature-stories` |
 | architect | HLD, LLD, ADRs | `feature-hld`, `feature-lld` |
 | designer | UI.md, tokens SoT | `feature-ui`, `ui-review` |

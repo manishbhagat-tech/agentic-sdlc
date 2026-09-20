@@ -47,6 +47,12 @@ orchestrators:
     skills:
       - addy/using-agent-skills
 
+  feature-research:
+    phase: design
+    skills:
+      - addy/source-driven-development
+      - addy/planning-and-task-breakdown
+
   feature-prd:
     phase: design
     skills:
@@ -195,10 +201,10 @@ coverage_index:
   addy/idea-refine: [feature-prd]
   addy/spec-driven-development: [feature-prd]
   addy/constraint-driven-development: [feature-stories, story-ready]
-  addy/planning-and-task-breakdown: [feature-stories]
+  addy/planning-and-task-breakdown: [feature-stories, feature-research]
   addy/incremental-implementation: [story-implement]
   addy/context-engineering: [story-implement, story-fix]
-  addy/source-driven-development: [story-implement, feature-lld]
+  addy/source-driven-development: [story-implement, feature-lld, feature-research]
   addy/doubt-driven-development: [story-implement, story-security]
   addy/frontend-ui-engineering: [feature-ui, ui-review]
   addy/api-and-interface-design: [feature-hld, feature-lld]

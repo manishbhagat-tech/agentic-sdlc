@@ -8,7 +8,7 @@ Reusable, product-agnostic contract for story-driven agent development.
 2. **Token-min** — run context packer before implement/fix/test/review/cleanup; stay under story budgets.
 3. **Secure + lean** — no secrets, least privilege, authz; minimal diffs; no junk; security ledger when findings appear.
 4. **Full-slice stories** — unless `channels` is narrowed: **API + Web UI + Mobile UI + tests + security/vuln review**.
-5. **Design before code** — feature PRD → HLD → LLD → UI (if web/mobile) → stories with `skills:[]`.
+5. **Design before code** — optional research pack → feature PRD → HLD → LLD → UI (if web/mobile) → stories with `skills:[]`.
 6. **Cleanup before done** — `story-cleanup` required; only that story’s diff footprint.
 7. **Markdown = source of truth** — boards (GitHub Projects / Jira) are mirrors.
 8. **Humans merge** — especially `security: elevated`; no auto-merge.
@@ -34,7 +34,7 @@ Set `DOCS_ROOT` in each code repo `AGENTS.md` (e.g. `../civil-erp-docs`).
 ## Skill loop
 
 ```
-feature-prd → feature-hld → feature-lld → feature-ui? → feature-stories
+feature-research? → feature-prd → feature-hld → feature-lld → feature-ui? → feature-stories
   → story-implement (api→web→mobile) → story-test → story-security
   → ui-review? → story-review → story-cleanup → git-ops → done
 ```
@@ -51,7 +51,7 @@ Legacy: `story-author` / `story-ready` are thin redirects — prefer feature-* s
 
 ## Roles
 
-See [ROLES.md](./ROLES.md) and [docs/GROK-ROLES.md](./docs/GROK-ROLES.md) (product, architect, designer, developer, qa, security, git, devops).
+See [ROLES.md](./ROLES.md) and [docs/GROK-ROLES.md](./docs/GROK-ROLES.md) (researcher, product, architect, designer, developer, qa, security, git, devops).
 
 ## Change handling
 
