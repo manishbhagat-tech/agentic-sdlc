@@ -1,0 +1,13 @@
+---
+description: Scalable design defaults for agent changes
+alwaysApply: true
+---
+
+# Scalable design
+
+- Assume growth: paginate lists; avoid unbounded in-memory loads.
+- Define timeouts, retries (idempotent only), and failure isolation on remote calls.
+- Prefer async/queue for long work; keep request paths thin.
+- Cache only with clear invalidation; do not cache authz decisions incorrectly.
+- Add or note metrics/logs/traces for new critical paths (see feature HLD Observability).
+- Avoid N+1 queries; batch where the LLD calls for it.

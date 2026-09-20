@@ -1,0 +1,47 @@
+# Example Deployment — copy to product repo deploy/k8s/deployment.yaml
+# Replace IMAGE_PLACEHOLDER at apply time (CI) or use Kustomize/Helm.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-api
+  labels:
+    app: your-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: your-api
+  template:
+    metadata:
+      labels:
+        app: your-api
+    spec:
+      containers:
+        - name: your-api
+          image: IMAGE_PLACEHOLDER
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 20
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+      securityContext:
+        runAsNonRoot: true

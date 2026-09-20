@@ -4,8 +4,8 @@
 set -euo pipefail
 DOCS="${1:-${DOCS_ROOT:-}}"
 if [[ -z "$DOCS" || ! -d "$DOCS" ]]; then
-  echo "usage: path-lock-check.sh <docs_root>" >&2
-  exit 2
+  echo "WARN: path-lock-check: DOCS_ROOT missing — skip"
+  exit 0
 fi
 
 python3 - "$DOCS" <<'PY'

@@ -1,0 +1,24 @@
+# Example multi-stage Dockerfile for JVM / Spring Boot
+# Copy to product repo as Dockerfile and replace YOUR-ARTIFACT with the Maven artifactId.
+# Kit does not build this image; each product repo owns its Dockerfile.
+
+FROM eclipse-temurin:21-jdk-alpine AS build
+WORKDIR /workspace
+COPY pom.xml .
+COPY src ./src
+RUN apk add --no-cache maven \
+  && mvn -B -DskipTests package \
+  && JAR=$(ls target/YOUR-ARTIFACT-*.jar | grep -v original | grep -v sources | head -1) \
+  && cp "$JAR" /workspace/app.jar
+
+FROM eclipse-temurin:21-jre-alpine AS runtime
+RUN apk add --no-cache wget \
+  && addgroup -S app && adduser -S app -G app
+WORKDIR /app
+COPY --from=build /workspace/app.jar /app/app.jar
+USER app
+EXPOSE 8080
+ENV JAVA_OPTS="-XX:MaxRAMPercentage=75"
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s \
+  CMD wget -qO- http://127.0.0.1:8080/actuator/health || exit 1
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]

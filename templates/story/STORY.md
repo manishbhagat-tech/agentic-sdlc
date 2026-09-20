@@ -6,6 +6,19 @@ status: draft
 revision: 1
 security: standard
 channels: [api, web, mobile]
+# Design-time SoT — feature-stories writes this; runtime loads only these wrappers
+# (intersected with WRAPPER-MAP phase). Every entry must exist under skills/<ns>/<name>/.
+skills:
+  - addy/context-engineering
+  - addy/incremental-implementation
+  - addy/test-driven-development
+  - addy/security-and-hardening
+  - addy/code-review-and-quality
+  - addy/code-simplification
+  # stack examples (gate by stacks: + channels):
+  # - sivalabs/spring-boot
+  # - vercel/react-best-practices
+  # - ui-skills/baseline-ui
 blocked_by: []
 supersedes: null
 superseded_by: null
@@ -50,12 +63,15 @@ As a …, I want …, so that ….
 - [ ] API done
 - [ ] Web UI done (design tokens only)
 - [ ] Mobile UI done (theme tokens only)
-- [ ] Tests green (`tests[]`)
-- [ ] Security checklist passed
+- [ ] Architect: LLD (+UI if web/mobile) referenced; reuse map followed
+- [ ] Tests green (`tests[]`) via `story-test`
+- [ ] Security: `story-security` + ledger notes; checklist passed
+- [ ] UI: `ui-review` passed (or N/A for api-only)
 - [ ] Vulnerability check noted
 - [ ] `story-review` + `story-cleanup`
-- [ ] PR cites this id
+- [ ] PR cites this id; elevated → human merge
 
 ## Notes
 
 Full-slice contract: see product `delivery/STORY-CONTRACT.md` when applicable.
+Parents: feature PRD / HLD / LLD / UI under `DOCS_ROOT`.

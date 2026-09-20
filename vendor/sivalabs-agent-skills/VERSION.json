@@ -1,0 +1,10 @@
+{
+  "repo": "sivaprasadreddy/sivalabs-agent-skills",
+  "url": "https://github.com/sivaprasadreddy/sivalabs-agent-skills",
+  "commit_sha": "031ea5ce90b5617ef8b3257c3d0739e6b613aaeb",
+  "tag": null,
+  "date": "2026-09-03T03:53:42Z",
+  "license": "MIT",
+  "reviewed_by": "agentic-sdlc",
+  "notes": "Primary Spring Boot vendor; markdown skills; no IntelliJ MCP required."
+}

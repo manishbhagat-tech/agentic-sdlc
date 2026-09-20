@@ -1,0 +1,244 @@
+# Machine SoT: orchestrator → thin wrappers (phases).
+# Runtime: essentials first, then skills listed for the active phase,
+# intersected with story frontmatter skills:[] (when present).
+# Every vendored skill must appear ≥ once (see scripts/check-wrapper-coverage.sh
+# for 1:1 wrapper files; this map asserts orchestrator reachability).
+
+version: 1
+
+# personas: under an orchestrator are always-on Addy agent overlays (skills/addy-agents/*).
+# skills: are procedure wrappers, intersected with story frontmatter skills:[].
+
+phases:
+  - bootstrap
+  - design
+  - ready
+  - implement
+  - fix
+  - test
+  - security
+  - ui-review
+  - review
+  - cleanup
+  - git
+  - devops
+
+# stack skills: gated by product AGENTS.md stacks: + story channels / skills:[]
+stack_gates:
+  sivalabs:
+    stacks: [spring, java]
+    channels: [api]
+  vercel/react-best-practices:
+    stacks: [react, next]
+    channels: [web]
+  vercel/react-native-skills:
+    stacks: [react-native]
+    channels: [mobile]
+  next:
+    stacks: [next]
+    channels: [web]
+  ui-skills:
+    stacks: [ui, next, react]
+    channels: [web, mobile]
+
+orchestrators:
+  bootstrap:
+    phase: bootstrap
+    skills:
+      - addy/using-agent-skills
+
+  feature-prd:
+    phase: design
+    skills:
+      - addy/interview-me          # optional discovery
+      - addy/idea-refine
+      - addy/spec-driven-development
+
+  feature-hld:
+    phase: design
+    skills:
+      - addy/api-and-interface-design
+      - addy/documentation-and-adrs
+      - addy/observability-and-instrumentation
+      - addy/performance-optimization
+
+  feature-lld:
+    phase: design
+    skills:
+      - addy/api-and-interface-design
+      - addy/source-driven-development
+      - addy/documentation-and-adrs
+      - addy/observability-and-instrumentation
+      - addy/performance-optimization
+
+  feature-ui:
+    phase: design
+    skills:
+      - addy/frontend-ui-engineering
+      - ui-skills/baseline-ui
+      - ui-skills/interface-design
+      - vercel/web-design-guidelines
+      - vercel/writing-guidelines
+      - vercel/composition-patterns
+      - vercel/react-view-transitions   # when stacks include react/next
+
+  feature-stories:
+    phase: design
+    skills:
+      - addy/planning-and-task-breakdown
+      - addy/constraint-driven-development
+
+  story-ready:
+    phase: ready
+    skills:
+      - addy/constraint-driven-development
+
+  story-implement:
+    phase: implement
+    skills:
+      - addy/context-engineering
+      - addy/incremental-implementation
+      - addy/source-driven-development   # elevated / complex
+      - addy/doubt-driven-development    # elevated only
+      # stack (story skills:[] + gates)
+      - sivalabs/spring-boot
+      - sivalabs/jspecify
+      - sivalabs/spring-modulith-verifier
+      - sivalabs/pair-programming
+      - sivalabs/progen
+      - vercel/react-best-practices
+      - vercel/react-native-skills
+      - vercel/composition-patterns
+      - vercel/react-view-transitions
+      - next/next-dev-loop
+      - next/next-cache-components-adoption
+      - next/next-cache-components-optimizer
+      - next/next-partial-prefetching-adoption
+      - next/next-partial-prefetching-optimizer
+
+  story-fix:
+    phase: fix
+    skills:
+      - addy/debugging-and-error-recovery
+      - addy/context-engineering
+      - sivalabs/java-code-review
+      - vercel/react-best-practices
+      - vercel/react-native-skills
+      - next/next-dev-loop
+
+  story-test:
+    phase: test
+    # personas: always-on overlays (not filtered by story skills:[])
+    personas:
+      - addy-agents/test-engineer
+    skills:
+      - addy/test-driven-development
+      - addy/browser-testing-with-devtools  # web channel
+
+  story-security:
+    phase: security
+    personas:
+      - addy-agents/security-auditor
+    skills:
+      - addy/security-and-hardening
+      - addy/doubt-driven-development       # elevated
+
+  ui-review:
+    phase: ui-review
+    personas:
+      - addy-agents/web-performance-auditor  # web channel only
+    skills:
+      - addy/frontend-ui-engineering
+      - ui-skills/baseline-ui
+      - ui-skills/interface-design
+      - vercel/web-design-guidelines
+      - vercel/react-best-practices
+      - vercel/react-native-skills
+
+  story-review:
+    phase: review
+    personas:
+      - addy-agents/code-reviewer
+      - addy-agents/web-performance-auditor  # web channel only; quick mode
+    skills:
+      - addy/code-review-and-quality
+      - addy/performance-optimization
+      - sivalabs/java-code-review
+
+  story-cleanup:
+    phase: cleanup
+    skills:
+      - addy/code-simplification
+
+  git-ops:
+    phase: git
+    skills:
+      - addy/git-workflow-and-versioning   # after git-safe deny filter
+
+  devops:
+    phase: devops
+    skills:
+      - addy/ci-cd-and-automation       # gates, staging→prod patterns (not Docker/K8s specifics)
+      - addy/shipping-and-launch        # launch checklist, health, rollback
+      - addy/deprecation-and-migration
+      - sivalabs/apply-renovate-prs
+      # Vercel only when stacks include vercel/next — not for K8s APIs:
+      - vercel/deploy-to-vercel
+      - vercel/vercel-cli-with-tokens
+      - vercel/vercel-optimize
+    # First-party: skills/devops/SKILL.md + docs/stacks/kubernetes.md (Docker/K8s)
+
+# Flat index: every thin wrapper id → primary orchestrators (coverage aid)
+coverage_index:
+  addy/using-agent-skills: [bootstrap]
+  addy/interview-me: [feature-prd]
+  addy/idea-refine: [feature-prd]
+  addy/spec-driven-development: [feature-prd]
+  addy/constraint-driven-development: [feature-stories, story-ready]
+  addy/planning-and-task-breakdown: [feature-stories]
+  addy/incremental-implementation: [story-implement]
+  addy/context-engineering: [story-implement, story-fix]
+  addy/source-driven-development: [story-implement, feature-lld]
+  addy/doubt-driven-development: [story-implement, story-security]
+  addy/frontend-ui-engineering: [feature-ui, ui-review]
+  addy/api-and-interface-design: [feature-hld, feature-lld]
+  addy/test-driven-development: [story-test]
+  addy/browser-testing-with-devtools: [story-test]
+  addy/debugging-and-error-recovery: [story-fix]
+  addy/code-review-and-quality: [story-review]
+  addy/code-simplification: [story-cleanup]
+  addy/security-and-hardening: [story-security]
+  addy/performance-optimization: [feature-hld, feature-lld, story-review]
+  addy/git-workflow-and-versioning: [git-ops]
+  addy/ci-cd-and-automation: [devops]
+  addy/deprecation-and-migration: [devops]
+  addy/documentation-and-adrs: [feature-hld, feature-lld]
+  addy/observability-and-instrumentation: [feature-hld, feature-lld]
+  addy/shipping-and-launch: [devops]
+  sivalabs/spring-boot: [story-implement]
+  sivalabs/jspecify: [story-implement]
+  sivalabs/spring-modulith-verifier: [story-implement]
+  sivalabs/pair-programming: [story-implement]
+  sivalabs/progen: [story-implement]
+  sivalabs/java-code-review: [story-fix, story-review]
+  sivalabs/apply-renovate-prs: [devops]
+  vercel/react-best-practices: [story-implement, story-fix, ui-review]
+  vercel/react-native-skills: [story-implement, story-fix, ui-review]
+  vercel/composition-patterns: [feature-ui, story-implement]
+  vercel/react-view-transitions: [feature-ui, story-implement]
+  vercel/web-design-guidelines: [feature-ui, ui-review]
+  vercel/writing-guidelines: [feature-ui]
+  vercel/deploy-to-vercel: [devops]
+  vercel/vercel-cli-with-tokens: [devops]
+  vercel/vercel-optimize: [devops]
+  next/next-dev-loop: [story-implement, story-fix]
+  next/next-cache-components-adoption: [story-implement]
+  next/next-cache-components-optimizer: [story-implement]
+  next/next-partial-prefetching-adoption: [story-implement]
+  next/next-partial-prefetching-optimizer: [story-implement]
+  ui-skills/baseline-ui: [feature-ui, ui-review]
+  ui-skills/interface-design: [feature-ui, ui-review]
+  addy-agents/code-reviewer: [story-review]
+  addy-agents/security-auditor: [story-security]
+  addy-agents/test-engineer: [story-test]
+  addy-agents/web-performance-auditor: [ui-review, story-review]

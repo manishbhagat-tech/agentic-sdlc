@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SecurityFinding",
+  "type": "object",
+  "required": ["id", "class", "severity", "summary", "status"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^SEC-" },
+    "class": {
+      "type": "string",
+      "enum": [
+        "secrets",
+        "authn",
+        "authz",
+        "injection",
+        "xss",
+        "csrf",
+        "ssrf",
+        "deserialization",
+        "path",
+        "dependency",
+        "logging",
+        "config",
+        "other"
+      ]
+    },
+    "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+    "summary": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["open", "mitigated", "accepted", "closed"] },
+    "story_id": { "type": "string" },
+    "bug_id": {
+      "type": "string",
+      "description": "Required when severity is critical|high and status is open — link to BUG-* markdown id",
+      "pattern": "^BUG-"
+    },
+    "path": { "type": "string" },
+    "evidence": { "type": "string" },
+    "remediation": { "type": "string" },
+    "created": { "type": "string" },
+    "updated": { "type": "string" }
+  },
+  "additionalProperties": false
+}

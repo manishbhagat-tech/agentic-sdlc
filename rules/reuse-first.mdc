@@ -1,0 +1,12 @@
+---
+description: Reuse existing modules before inventing new ones
+alwaysApply: true
+---
+
+# Reuse first
+
+- Read the feature LLD **reuse map** before adding packages or services.
+- Prefer extending existing modules, shared libs, and design-system primitives.
+- New modules need a one-line justification in the story Notes or LLD.
+- Do not duplicate utilities already in allowlisted paths.
+- Web/mobile: compose FEAT-UI / token primitives — no one-off visual systems.

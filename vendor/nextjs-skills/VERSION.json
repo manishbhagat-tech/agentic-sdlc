@@ -1,0 +1,10 @@
+{
+  "repo": "vercel/next.js",
+  "url": "https://github.com/vercel/next.js/tree/canary/skills",
+  "commit_sha": "34433fd12ee8074ea3f47af9f36255c7390d0301",
+  "tag": "canary",
+  "date": "2026-09-19T23:20:37Z",
+  "license": "MIT",
+  "reviewed_by": "agentic-sdlc",
+  "notes": "Only skills/ subtree from Next.js canary; version-matched workflows. Load when story skills[] declares next/*."
+}

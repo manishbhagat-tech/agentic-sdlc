@@ -1,15 +1,22 @@
 # Board adapter config — GitHub Projects (v1)
 
-# Fill in after creating a GitHub Project. Markdown remains source of truth.
+# Markdown under DOCS_ROOT remains source of truth.
+# GitHub Issues + Project board are the **dashboard mirror** for US-* / BUG-*.
 
 provider: github_projects
 enabled: false
 
-# Repository that owns issues (org/name)
-repo: YOUR_ORG/civil-erp-docs
+# Repository that owns issues (org/name) — usually the docs repo
+repo: YOUR_ORG/your-docs
 
-# Project number (from Projects URL)
+# GitHub user or org that owns the Project
+project_owner: YOUR_ORG
+
+# Project number (from Projects URL: /users/…/projects/N or /orgs/…/projects/N)
 project_number: 1
+
+# Project single-select field used for Status (default GitHub name)
+status_field: Status
 
 # Map markdown status → Project Status option names
 status_map:
@@ -23,7 +30,7 @@ status_map:
   cancelled: Cancelled
   superseded: Cancelled
 
-# Pull board status into markdown when true
+# Sync policy — keep false until Project Status options match status_map exactly
 sync:
   status_from_board: false
   push_on_ready: true
@@ -31,7 +38,13 @@ sync:
 # Title format for issues
 title_template: "{id}: {title}"
 
-# Labels
+# Labels (create these on the issues repo)
 security_elevated_label: "security:elevated"
 bug_label: bug
 story_label: story
+
+# Views to create manually in the Project UI (recommended dashboard)
+# - Stories: filter label:story
+# - Bugs: filter label:bug
+# - Elevated: filter label:security:elevated
+# - By status: board grouped by Status

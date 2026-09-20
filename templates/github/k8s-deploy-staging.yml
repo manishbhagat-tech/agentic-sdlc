@@ -1,0 +1,50 @@
+# Deploy image to Kubernetes STAGING
+# Copy to .github/workflows/k8s-deploy-staging.yml and set IMAGE_NAME / secrets.
+# Production: use k8s-deploy-prod.yml (workflow_dispatch + required reviewers).
+# Agents must not auto-trigger production.
+
+name: K8s deploy staging
+
+on:
+  workflow_run:
+    workflows: ["Docker build"]
+    types: [completed]
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Image tag (git sha)"
+        required: false
+
+concurrency:
+  group: k8s-staging-your-api
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-kubectl@v4
+      - name: Resolve tag
+        id: tag
+        run: |
+          TAG="${{ inputs.image_tag }}"
+          if [[ -z "$TAG" ]]; then TAG="${{ github.event.workflow_run.head_sha || github.sha }}"; fi
+          echo "tag=${TAG:0:7}" >> "$GITHUB_OUTPUT"
+          echo "full=$TAG" >> "$GITHUB_OUTPUT"
+      - name: Configure cluster
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_STAGING }}" | base64 -d > kubeconfig
+          echo "KUBECONFIG=$PWD/kubeconfig" >> "$GITHUB_ENV"
+      - name: Apply
+        env:
+          IMAGE: ${{ vars.REGISTRY || 'ghcr.io' }}/${{ github.repository_owner }}/${{ vars.IMAGE_NAME || 'your-api' }}:${{ steps.tag.outputs.tag }}
+          NS: ${{ vars.K8S_NAMESPACE_STAGING || 'staging' }}
+        run: |
+          kubectl get ns "$NS" >/dev/null 2>&1 || kubectl create ns "$NS"
+          sed "s|IMAGE_PLACEHOLDER|$IMAGE|g" deploy/k8s/deployment.yaml | kubectl -n "$NS" apply -f -
+          kubectl -n "$NS" apply -f deploy/k8s/service.yaml
+          kubectl -n "$NS" rollout status "deploy/your-api" --timeout=180s

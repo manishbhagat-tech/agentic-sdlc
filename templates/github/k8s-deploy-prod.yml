@@ -1,0 +1,38 @@
+# Deploy image to Kubernetes PRODUCTION (human-gated)
+# Copy to .github/workflows/k8s-deploy-prod.yml
+# Configure GitHub Environment "production" with required reviewers.
+# Agents must never auto-trigger this workflow.
+
+name: K8s deploy production
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Image tag that passed staging (git sha)"
+        required: true
+
+concurrency:
+  group: k8s-prod-your-api
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-kubectl@v4
+      - name: Configure cluster
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_PRODUCTION }}" | base64 -d > kubeconfig
+          echo "KUBECONFIG=$PWD/kubeconfig" >> "$GITHUB_ENV"
+      - name: Apply
+        env:
+          IMAGE: ${{ vars.REGISTRY || 'ghcr.io' }}/${{ github.repository_owner }}/${{ vars.IMAGE_NAME || 'your-api' }}:${{ inputs.image_tag }}
+          NS: ${{ vars.K8S_NAMESPACE_PRODUCTION || 'production' }}
+        run: |
+          kubectl get ns "$NS" >/dev/null 2>&1 || kubectl create ns "$NS"
+          sed "s|IMAGE_PLACEHOLDER|$IMAGE|g" deploy/k8s/deployment.yaml | kubectl -n "$NS" apply -f -
+          kubectl -n "$NS" apply -f deploy/k8s/service.yaml
+          kubectl -n "$NS" rollout status "deploy/your-api" --timeout=300s

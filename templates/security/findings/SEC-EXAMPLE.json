@@ -1,0 +1,14 @@
+{
+  "id": "SEC-EXAMPLE",
+  "class": "secrets",
+  "severity": "high",
+  "summary": "Example finding — replace or delete. Critical/High open items need bug_id.",
+  "status": "closed",
+  "story_id": "US-GOLDEN-AUTH",
+  "bug_id": "BUG-GOLDEN-SEC-EXAMPLE",
+  "path": "src/Auth.java",
+  "evidence": "fixture only",
+  "remediation": "n/a — example",
+  "created": "2026-09-20",
+  "updated": "2026-09-20"
+}

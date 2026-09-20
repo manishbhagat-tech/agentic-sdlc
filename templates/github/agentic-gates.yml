@@ -1,0 +1,66 @@
+# Product CI — agentic-sdlc gates
+#
+# Copy to your CODE repo as `.github/workflows/agentic-gates.yml`
+# after: ./agentic-sdlc/scripts/install-to-workspace.sh .
+
+name: Agentic gates
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+jobs:
+  product-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Optional: checkout docs repo into ./docs
+      # - name: Checkout docs
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: YOUR_ORG/your-docs
+      #     path: docs
+      #     token: ${{ secrets.DOCS_READ_TOKEN }}
+
+      - name: Setup scripts
+        run: |
+          chmod +x scripts/agentic/*.sh
+          test -f scripts/agentic/product-gates.sh
+
+      - name: Install gitleaks
+        run: |
+          curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v8.21.2/gitleaks_8.21.2_linux_x64.tar.gz" \
+            | sudo tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Product gates
+        env:
+          DOCS_ROOT: ${{ vars.DOCS_ROOT || 'docs' }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+          AGENTIC_SECURITY_STRICT: ${{ vars.AGENTIC_SECURITY_STRICT || '0' }}
+          AGENTIC_REQUIRE_RUN_LOG: ${{ vars.AGENTIC_REQUIRE_RUN_LOG || '0' }}
+        run: |
+          export WORKSPACE_ROOT="$PWD"
+          if [[ -f .agentic/KIT_ROOT ]]; then
+            export KIT_ROOT="$(cat .agentic/KIT_ROOT)"
+          fi
+          export STORY_ID="$(echo "${PR_TITLE:-}" | grep -oE '(US|BUG)-[A-Z0-9][A-Z0-9_-]*' | head -1 || true)"
+          # Push-to-main without PR: still require story id in commit message
+          ./scripts/agentic/product-gates.sh
+
+      - name: Path lock
+        env:
+          DOCS_ROOT: ${{ vars.DOCS_ROOT || 'docs' }}
+        run: |
+          if [[ -d "$DOCS_ROOT" ]]; then
+            ./scripts/agentic/path-lock-check.sh "$DOCS_ROOT"
+          else
+            echo "WARN: DOCS_ROOT=$DOCS_ROOT missing — skip path-lock"
+          fi

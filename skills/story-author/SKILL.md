@@ -1,17 +1,15 @@
 ---
 name: story-author
 description: >-
-  Author or amend Epic/Feature/Story/BUG markdown under DOCS_ROOT with tight
-  allowlists, budgets, and security flags. Use when creating delivery work items.
+  Legacy redirect. Prefer feature-prd / feature-stories for new delivery docs.
 ---
 
 # story-author
 
-## Steps
+**Prefer `feature-prd` then `feature-stories`.** This skill is **legacy only**.
 
-1. Read `DOCS_ROOT` from workspace `AGENTS.md`.
-2. Use templates from the agentic-sdlc kit (`templates/`).
-3. Write **minimal** stories: clear AC, DoD, `must_read`, `repos[].allow`, `budget`, `tests`, `security`.
-4. Prefer small `allow` globs; never entire modules.
-5. Do **not** edit application code.
-6. Leave `status: draft` until `story-ready` passes.
+If you must use it: author Epic/Feature/Story/BUG markdown under `DOCS_ROOT` with templates, tight allowlists, budgets, and `skills: []` on new US-*/BUG-*. Do not edit application code. Leave `status: draft` until DoR (`feature-stories` or legacy `story-ready`) passes.
+
+```
+HANDOFF: story-author → feature-stories|story-ready | outcome=legacy | notes=prefer feature-prd/feature-stories
+```

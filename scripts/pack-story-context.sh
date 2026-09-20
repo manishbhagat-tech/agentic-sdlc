@@ -12,6 +12,12 @@ fi
 ROOT="${WORKSPACE_ROOT:-$(pwd)}"
 AGENTS="$ROOT/AGENTS.md"
 DOCS_ROOT="${DOCS_ROOT:-}"
+# Kit root for SECURITY-BASELINE best-effort include
+KIT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+export KIT_ROOT
+if [[ -z "${AGENTIC_SDLC:-}" ]]; then
+  export AGENTIC_SDLC="$KIT_ROOT"
+fi
 
 if [[ -z "$DOCS_ROOT" && -f "$AGENTS" ]]; then
   DOCS_ROOT=$(grep -E '^\s*DOCS_ROOT:' "$AGENTS" | head -1 | sed 's/.*DOCS_ROOT:[[:space:]]*//' | tr -d '`"'"'" || true)
@@ -152,6 +158,71 @@ try:
 except Exception:
     diff_path.write_text("(no git diff)\n", encoding="utf-8")
 
+# Best-effort: SECURITY-BASELINE + open ledger findings
+sec_dir = pathlib.Path(pack_dir) / "SECURITY"
+sec_dir.mkdir(exist_ok=True)
+sec_included = []
+kit_root = os.environ.get("AGENTIC_SDLC") or os.environ.get("KIT_ROOT")
+baseline_candidates = []
+if kit_root:
+    baseline_candidates.append(pathlib.Path(kit_root) / "docs" / "SECURITY-BASELINE.md")
+baseline_candidates += [
+    pathlib.Path(docs_root) / "SECURITY-BASELINE.md",
+    pathlib.Path(docs_root) / "docs" / "SECURITY-BASELINE.md",
+    pathlib.Path(workspace) / "docs" / "SECURITY-BASELINE.md",
+]
+for bp in baseline_candidates:
+    if bp.is_file():
+        raw = bp.read_text(encoding="utf-8", errors="replace")
+        lines = raw.splitlines()
+        if len(lines) > max_lines:
+            raw = "\n".join(lines[:max_lines]) + f"\n\n… truncated at {max_lines} lines …\n"
+        (sec_dir / "SECURITY-BASELINE.md").write_text(raw, encoding="utf-8")
+        bytes_total += len(raw.encode("utf-8"))
+        sec_included.append(str(bp))
+        files_included.append(str(bp))
+        break
+
+ledger_roots = [
+    pathlib.Path(workspace) / ".agentic" / "security",
+    pathlib.Path(docs_root) / ".agentic" / "security",
+]
+for lr in ledger_roots:
+    if not lr.is_dir():
+        continue
+    ledger = lr / "LEDGER.md"
+    if ledger.is_file():
+        raw = ledger.read_text(encoding="utf-8", errors="replace")
+        lines = raw.splitlines()
+        if len(lines) > max_lines:
+            raw = "\n".join(lines[:max_lines]) + f"\n\n… truncated …\n"
+        (sec_dir / "LEDGER.md").write_text(raw, encoding="utf-8")
+        bytes_total += len(raw.encode("utf-8"))
+        sec_included.append(str(ledger))
+        files_included.append(str(ledger))
+    findings_dir = lr / "findings"
+    if findings_dir.is_dir():
+        count = 0
+        for fj in sorted(findings_dir.glob("*.json")):
+            try:
+                data = json.loads(fj.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            if str(data.get("status", "open")).lower() not in ("open", "mitigated"):
+                continue
+            dest = sec_dir / f"finding_{fj.name}"
+            body = fj.read_text(encoding="utf-8", errors="replace")
+            if len(body) > 4000:
+                body = body[:4000] + "\n… truncated …\n"
+            dest.write_text(body, encoding="utf-8")
+            bytes_total += len(body.encode("utf-8"))
+            sec_included.append(str(fj))
+            files_included.append(str(fj))
+            count += 1
+            if count >= 5:
+                break
+    break
+
 # Token estimate ~ chars/4
 est_tokens = max(1, bytes_total // 4)
 manifest = {
@@ -167,6 +238,7 @@ manifest = {
     "files_included": files_included,
     "outline_files": outline_count,
     "allow": allow_paths,
+    "security_included": sec_included,
 }
 (pathlib.Path(pack_dir) / "MANIFEST.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 

@@ -7,12 +7,38 @@
     "revision": { "type": ["string", "number"] },
     "skill": {
       "type": "string",
-      "enum": ["story-implement", "story-fix", "story-test", "story-review", "story-cleanup", "story-ready", "story-author"]
+      "enum": [
+        "feature-prd",
+        "feature-hld",
+        "feature-lld",
+        "feature-ui",
+        "feature-stories",
+        "story-implement",
+        "story-fix",
+        "story-test",
+        "story-security",
+        "ui-review",
+        "story-review",
+        "story-cleanup",
+        "git-ops",
+        "devops",
+        "story-ready",
+        "story-author",
+        "bootstrap"
+      ]
     },
     "pack_tokens_est": { "type": "integer" },
     "files_read": { "type": "integer" },
     "files_edited": { "type": "integer" },
     "paths_outside_allow": { "type": "integer" },
+    "skills_declared": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "skills_invoked": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
     "security": { "type": "string" },
     "cleanup_ran": { "type": "boolean" },
     "tests_passed": { "type": "boolean" },

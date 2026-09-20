@@ -1,0 +1,29 @@
+# Role → orchestrator map (never vendor/ raw)
+version: 1
+roles:
+  product:
+    orchestrators: [feature-prd, feature-stories]
+    wrappers: [addy/interview-me, addy/idea-refine, addy/spec-driven-development, addy/planning-and-task-breakdown, addy/constraint-driven-development]
+  architect:
+    orchestrators: [feature-hld, feature-lld]
+    wrappers: [addy/api-and-interface-design, addy/documentation-and-adrs, addy/observability-and-instrumentation, addy/performance-optimization, addy/source-driven-development]
+  designer:
+    orchestrators: [feature-ui, ui-review]
+    wrappers: [addy/frontend-ui-engineering, ui-skills/baseline-ui, ui-skills/interface-design, vercel/web-design-guidelines, vercel/writing-guidelines, vercel/composition-patterns]
+  developer:
+    orchestrators: [story-implement, story-fix, story-cleanup]
+    wrappers: [addy/context-engineering, addy/incremental-implementation, addy/debugging-and-error-recovery, addy/code-simplification]
+  qa:
+    orchestrators: [story-test, story-review]
+    wrappers: [addy-agents/test-engineer, addy-agents/code-reviewer, addy/test-driven-development, addy/browser-testing-with-devtools, addy/code-review-and-quality]
+  security:
+    orchestrators: [story-security]
+    wrappers: [addy-agents/security-auditor, addy/security-and-hardening, addy/doubt-driven-development]
+  git:
+    orchestrators: [git-ops]
+    wrappers: [addy/git-workflow-and-versioning]
+  devops:
+    orchestrators: [devops]
+    wrappers: [addy/ci-cd-and-automation, addy/shipping-and-launch, addy/deprecation-and-migration]
+    # Docker/K8s: docs/stacks/kubernetes.md + templates/deploy|github|k8s (not Addy)
+    # Vercel wrappers only when stacks gate them

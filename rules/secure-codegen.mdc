@@ -1,0 +1,15 @@
+---
+description: Secure codegen — authz, validation, no secrets
+alwaysApply: true
+---
+
+# Secure codegen
+
+- Never commit secrets, `.env`, keys, or tokens; never put them in packs or run logs.
+- Validate and sanitize untrusted input at API boundaries.
+- Mutating endpoints: authenticate + authorize (tenant/company/role) before side effects.
+- Use parameterized queries / safe ORM binders — no string-built SQL.
+- Escape/sanitize user content on web; least-privilege CORS and actuators.
+- Log structured errors without passwords, JWTs, or unnecessary PII.
+- For `security: elevated`, run `story-security` and require human merge.
+- Prefer updating `.agentic/security/` ledger when findings appear.

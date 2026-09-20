@@ -5,6 +5,11 @@ title: Golden auth pack test
 status: ready
 revision: 1
 security: elevated
+channels: [api]
+skills:
+  - addy/security-and-hardening
+  - addy/context-engineering
+  - addy/test-driven-development
 budget:
   max_context_tokens: 8000
   max_files_read: 6

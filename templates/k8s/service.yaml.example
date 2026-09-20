@@ -1,0 +1,12 @@
+# Example Service — copy to product repo deploy/k8s/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: your-api
+spec:
+  selector:
+    app: your-api
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: ClusterIP

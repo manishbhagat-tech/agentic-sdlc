@@ -16,25 +16,24 @@ Before enabling any MCP:
 
 | MCP | Status | Notes |
 |-----|--------|-------|
-| _(none)_ | default | First-party packer + allowlists |
+| _(none default)_ | default | First-party packer + allowlists |
+| [UI Skills MCP](https://www.ui-skills.com/mcp) (`0.2.4`) | **approved (scoped)** | Remote HTTP MCP; tools `list_skills` / `get_skill` only. Use for UI polish (shell/dashboard). Prefer skills: `baseline-ui`, `interface-design`. Do **not** load marketing/landing/3D skills into Admin stories. Keep FEAT-UI tokens + ADR-002 as source of truth. |
 | [jgravelle/jcodemunch-mcp](https://github.com/jgravelle/jcodemunch-mcp) | **candidate** | Symbol/AST retrieval for token cuts; pin version; local trusted folders only; review SECURITY.md |
 | Zilliz claude-context | deferred | Check cloud/embedding data leaving machine |
 | TokenTamer / random proxies | **rejected for v1** | High middleman risk |
 
 ## Enable pattern (Cursor)
 
-Document in product `AGENTS.md` only after allowlist row is `approved`:
+User-level `~/.cursor/mcp.json` (or Cursor Settings → MCP):
 
-```jsonc
-// example — do not enable until pinned + reviewed
+```json
 {
   "mcpServers": {
-    "jcodemunch": {
-      "command": "uvx",
-      "args": ["jcodemunch-mcp@PINNED_VERSION"]
+    "ui-skills": {
+      "url": "https://www.ui-skills.com/mcp"
     }
   }
 }
 ```
 
-Then update `story-implement` skill: prefer symbol tools over full-file reads.
+Reload Cursor MCP / restart agent session after adding.

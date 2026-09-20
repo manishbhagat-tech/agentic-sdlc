@@ -1,0 +1,12 @@
+---
+description: Git guardrails — story branches, git-safe, no destructive history
+alwaysApply: true
+---
+
+# Git guardrails
+
+- Use `scripts/git-safe.sh` (or `scripts/agentic/git-safe.sh` after install) for agent git mutations.
+- Branches: `feat/US-…` or `fix/BUG-…`; one story per PR; PR cites the id.
+- Deny: force-push to shared defaults, `reset --hard`, `clean -fdx`, `filter-branch`, `gh repo delete`, pushing directly to `main`/`master`.
+- Never add `.env`, `*.pem`, `id_rsa*`, or `credentials.json`.
+- Humans merge `security: elevated` and production releases.

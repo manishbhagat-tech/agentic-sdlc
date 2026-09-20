@@ -1,0 +1,10 @@
+{
+  "repo": "addyosmani/agent-skills",
+  "url": "https://github.com/addyosmani/agent-skills",
+  "commit_sha": "c004a74784a08295d52749b04cda634125b9a581",
+  "tag": null,
+  "date": "2026-09-18T03:32:15Z",
+  "license": "MIT",
+  "reviewed_by": "agentic-sdlc",
+  "notes": "Full upstream tree vendored; Grok/Cursor enter via skills/addy/* wrappers only. Re-review on SHA bump."
+}

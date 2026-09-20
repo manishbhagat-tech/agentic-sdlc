@@ -5,6 +5,10 @@ title: Golden company pack test
 status: ready
 revision: 1
 security: standard
+channels: [api]
+skills:
+  - addy/incremental-implementation
+  - addy/test-driven-development
 budget:
   max_context_tokens: 8000
   max_files_read: 6

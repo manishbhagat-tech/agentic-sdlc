@@ -1,21 +1,101 @@
+# gates.yaml — machine SoT for kit + product CI
+#
+# product_ci: true  → enforced by scripts/product-gates.sh in product repos
+# kit_ci: true      → enforced by scripts/harness-check.sh in this kit
+
 gates:
   - id: story_ready
-    description: Valid frontmatter; status ready or in_progress
+    product_ci: true
+    kit_ci: true
+    description: Valid frontmatter; status ready or in_progress; skills[] for new stories
+    script: validate-story-frontmatter.sh
+
+  - id: design_parents
+    product_ci: true
+    kit_ci: false
+    description: PRD+HLD+LLD present; UI.md when web/mobile
+    script: validate-story-frontmatter.sh
+
   - id: pack_budget
+    product_ci: false
+    kit_ci: true
     description: pack_tokens_est <= budget.max_context_tokens
+    script: pack-story-context.sh
+
   - id: path_scope
-    description: Edits only under repos[].allow
+    product_ci: true
+    kit_ci: false
+    description: Edits only under repos[].allow (agent discipline; CI spot-check via path-lock)
+    script: path-lock-check.sh
+
   - id: read_caps
-    description: Respect max_files_read / max_file_lines
+    product_ci: false
+    kit_ci: false
+    description: Respect max_files_read / max_file_lines (agent + packer)
+
   - id: shell_deny
-    description: Deny force-push, hard reset, destructive rm
+    product_ci: false
+    kit_ci: false
+    description: Deny force-push, hard reset, clean -fdx (Cursor hooks)
+
+  - id: git_safe
+    product_ci: false
+    kit_ci: false
+    description: Agent git via git-safe allowlist
+
   - id: tests
-    description: Story tests exit 0
+    product_ci: true
+    kit_ci: false
+    description: Story tests exit 0 (product job runs tests[]; this gate checks declaration)
+    script: validate-story-frontmatter.sh
+
+  - id: security_check
+    product_ci: true
+    kit_ci: true
+    description: security-check.sh (+ optional gitleaks/npm audit); ledger updates
+    script: security-check.sh
+
+  - id: security_findings_bugs
+    product_ci: true
+    kit_ci: true
+    description: Critical/High open findings must link bug_id (BUG-*)
+    script: check-security-findings.sh
+
+  - id: ui_review
+    product_ci: false
+    kit_ci: false
+    description: ui-review when web/mobile; fail on token violations (agent + run log)
+
   - id: security_review
-    description: Security checklist; elevated needs human
+    product_ci: false
+    kit_ci: false
+    description: Slim checklist in story-review; elevated needs human
+
   - id: lean_cleanup
+    product_ci: false
+    kit_ci: false
     description: story-cleanup run logged before done
+
   - id: pr_cite
+    product_ci: true
+    kit_ci: false
     description: PR/commit cites US-* or BUG-*
+    script: check-pr-story-id.sh
+
   - id: run_log
-    description: .agentic/runs/*.json present
+    product_ci: true
+    kit_ci: false
+    description: .agentic/runs/*.json present when AGENTIC_REQUIRE_RUN_LOG=1
+    script: check-run-logs.sh
+
+  - id: wrapper_coverage
+    product_ci: false
+    kit_ci: true
+    description: Every vendored skill + Addy agent has a thin wrapper
+    script: check-wrapper-coverage.sh
+
+  - id: board_mirror
+    product_ci: false
+    kit_ci: false
+    description: GitHub Projects mirror of US-*/BUG-* (board-push / board-sync)
+    script: board-sync.sh

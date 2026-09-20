@@ -14,12 +14,23 @@ except Exception:
 
 deny_patterns=(
   'git[[:space:]]+push[[:space:]]+.*--force'
-  'git[[:space:]]+push[[:space:]]+-f'
+  'git[[:space:]]+push[[:space:]]+.*--force-with-lease'
+  'git[[:space:]]+push[[:space:]]+-f([[:space:]]|$)'
+  'git[[:space:]]+push[[:space:]]+.*[[:space:]](main|master)([[:space:]]|$)'
   'git[[:space:]]+reset[[:space:]]+--hard'
+  'git[[:space:]]+clean[[:space:]]+.*-fdx'
+  'git[[:space:]]+clean[[:space:]]+.*-ffdx'
+  'git[[:space:]]+filter-branch'
+  'git[[:space:]]+filter-repo'
+  'git[[:space:]]+push[[:space:]]+.*:main'
+  'git[[:space:]]+push[[:space:]]+.*:master'
+  'gh[[:space:]]+repo[[:space:]]+delete'
+  'gh[[:space:]]+repo[[:space:]]+edit[[:space:]]+.*--visibility[[:space:]]+public'
   'rm[[:space:]]+-rf[[:space:]]+/'
   'rm[[:space:]]+-rf[[:space:]]+~'
   'mkfs\.'
   'dd[[:space:]]+if='
+  'chmod[[:space:]]+-R[[:space:]]+777[[:space:]]+/'
 )
 
 for pat in "${deny_patterns[@]}"; do
