@@ -99,6 +99,8 @@ VENDORS = {
     "vercel": ("vendor/vercel-agent-skills/skills", True),
     "next": ("vendor/nextjs-skills/skills", True),
     "ui-skills": ("vendor/ui-skills", False),
+    "ecc": ("vendor/ecc-market-research", False),
+    "pm": ("vendor/pm-competitor-analysis", False),
 }
 
 ADDY_AGENTS_DIR = ROOT / "vendor" / "addy-agent-skills" / "agents"

@@ -1,0 +1,11 @@
+{
+  "repo": "phuryn/pm-skills",
+  "url": "https://github.com/phuryn/pm-skills",
+  "source_path": "pm-market-research/skills/competitor-analysis/SKILL.md",
+  "commit_sha": "8607e3b077817f89bf4a9b623246219734ac3be0",
+  "tag": null,
+  "date": "2026-09-14T21:15:01Z",
+  "license": "MIT",
+  "reviewed_by": "agentic-sdlc",
+  "notes": "Scoped pin of competitor-analysis only (5-competitor matrix). MIT (Copyright 2026 Pawel Huryn). Enter via skills/pm/competitor-analysis. Re-review on SHA bump."
+}

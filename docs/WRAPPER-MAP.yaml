@@ -50,6 +50,9 @@ orchestrators:
   feature-research:
     phase: design
     skills:
+      - ecc/market-research            # default research standard
+      - pm/competitor-analysis         # mode: competitors
+      - should-i-build                 # mode: validate / go-no-go (first-party scorecard)
       - addy/source-driven-development
       - addy/planning-and-task-breakdown
 
@@ -221,6 +224,9 @@ coverage_index:
   addy/documentation-and-adrs: [feature-hld, feature-lld]
   addy/observability-and-instrumentation: [feature-hld, feature-lld]
   addy/shipping-and-launch: [devops]
+  ecc/market-research: [feature-research]
+  pm/competitor-analysis: [feature-research]
+  should-i-build: [feature-research]
   sivalabs/spring-boot: [story-implement]
   sivalabs/jspecify: [story-implement]
   sivalabs/spring-modulith-verifier: [story-implement]

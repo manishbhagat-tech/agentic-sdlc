@@ -6,7 +6,7 @@ roles:
     wrappers: [addy/interview-me, addy/idea-refine, addy/spec-driven-development, addy/planning-and-task-breakdown, addy/constraint-driven-development]
   researcher:
     orchestrators: [feature-research]
-    wrappers: [addy/source-driven-development, addy/planning-and-task-breakdown]
+    wrappers: [ecc/market-research, pm/competitor-analysis, should-i-build, addy/source-driven-development, addy/planning-and-task-breakdown]
   architect:
     orchestrators: [feature-hld, feature-lld]
     wrappers: [addy/api-and-interface-design, addy/documentation-and-adrs, addy/observability-and-instrumentation, addy/performance-optimization, addy/source-driven-development]

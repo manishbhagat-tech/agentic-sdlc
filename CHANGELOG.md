@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.4 — 2026-09-20
+
+- Researcher enrichment: pin ECC `market-research` + phuryn `competitor-analysis` (thin wrappers `ecc/*`, `pm/*`)
+- First-party `skills/should-i-build` (scorecard / BUILD·CONDITIONAL·PIVOT·STOP only; inspired by Endokelp/Should-I-build — not vendored)
+- `feature-research` modes: default ECC standards; `competitors` matrix; `validate` go-no-go
+- WRAPPER-MAP + roles.yaml + OSS-ENRICHMENT pins; coverage scripts list the new vendor trees
+
 ## 0.3.3 — 2026-09-20
 
 - Researcher role (`roles/researcher`) + orchestrator `skills/feature-research`: topic → cited pack → HANDOFF product
